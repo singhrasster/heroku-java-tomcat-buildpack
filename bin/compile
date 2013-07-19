@@ -2,18 +2,24 @@
 # bin/compile <build-dir> <cache-dir>
 
 # fail fast
+echo "in compile file"
 set -e
+echo "in compile file 1"
 
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_start"
+echo "in compile file 2"
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
 LOGGER_FLAGS=""
+echo "in compile file 3"
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
 . bin/java
+
+echo "in compile file 4"
 
 KEEP_M2_CACHE="true"
 
