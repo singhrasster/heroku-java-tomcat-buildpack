@@ -127,9 +127,11 @@ echo "in compile file 15"
 BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $CACHE_DIR/.m2/settings.xml -DskipTests=true clean install"
 echo "-----> executing $BUILDCMD"
 
-echo "in compile file 16"
+echo "in compile file 16."
 
 $BUILDCMD 2>&1 | sed -u 's/^/       /'
+
+echo "in compile file 16.1"
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app with Maven"
