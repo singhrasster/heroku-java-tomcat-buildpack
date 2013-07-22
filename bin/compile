@@ -28,9 +28,13 @@ if [ -f ${CACHE_DIR}/.jdk/vendor ] && [ ! -f ${BUILD_DIR}/system.properties ]; t
   echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
 fi
 
+echo "in compile file 5"
+
 if [ -f ${CACHE_DIR}/system.properties ] && [ ! -f ${BUILD_DIR}/system.properties ]; then
   cp ${CACHE_DIR}/system.properties ${BUILD_DIR}/system.properties
 fi
+
+echo "in compile file 6"
 
 if [ ! -d $CACHE_DIR ]; then
   LOGGER_FLAGS="$LOGGER_FLAGS new_java_app"
@@ -43,12 +47,18 @@ elif [ -f $CACHE_DIR/removeM2Cache ]; then
   KEEP_M2_CACHE="false"
 fi
 
+echo "in compile file 7"
+
 if [ "true" == $KEEP_M2_CACHE ]; then
   logger -p user.notice -t "slugc[$$]" "language_pack_java retain_m2_repo"
 fi
 
+echo "in compile file 8"
+
 #create the cache dir if it doesn't exist
 mkdir -p $CACHE_DIR
+
+echo "in compile file 9"
 
 # install JDK 
 if [ -f ${BUILD_DIR}/system.properties ]; then
@@ -62,10 +72,13 @@ if [ -f ${BUILD_DIR}/system.properties ]; then
   cp ${BUILD_DIR}/system.properties ${CACHE_DIR}/
 fi
 
+echo "in compile file 10"
+
 # change to cache dir to install maven & tomcat
 cd $CACHE_DIR
 
 TOMCAT_URL="http://apache.petsads.us/tomcat/tomcat-7/v7.0.35/bin/apache-tomcat-7.0.35.tar.gz"
+echo "in compile file 11"
 if [ ! -d tomcat ]; then
   echo -n "-----> Installing Tomcat 7.0.35..."
   curl --silent --location $TOMCAT_URL | tar xz
@@ -76,6 +89,7 @@ if [ ! -d tomcat ]; then
 else
   echo "-----> Tomcat already present"
 fi
+echo "in compile file 12"
 
 # install maven with base repository
 MAVEN_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/maven.tar.gz"
@@ -86,6 +100,7 @@ if [ ! -d .maven ]; then
   chmod +x .maven/bin/mvn
   echo " done"
 fi
+echo "in compile file 13"
 
 MAVEN_SETTINGS_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/settings.xml"
 
@@ -96,14 +111,19 @@ fi
 curl --silent --max-time 10 --location $MAVEN_SETTINGS_URL --output .m2/settings.xml
 echo " done"
 
+echo "in compile file 14"
+
 # change to build dir to run maven
 cd $BUILD_DIR
 
 export MAVEN_OPTS="-Xmx512m"
+echo "in compile file 15"
 
 # build app
 BUILDCMD="$CACHE_DIR/.maven/bin/mvn -B -Duser.home=$BUILD_DIR -Dmaven.repo.local=$CACHE_DIR/.m2/repository -s $CACHE_DIR/.m2/settings.xml -DskipTests=true clean install"
 echo "-----> executing $BUILDCMD"
+
+echo "in compile file 16"
 
 $BUILDCMD 2>&1 | sed -u 's/^/       /'
 
@@ -112,10 +132,14 @@ if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   exit 1
 fi
 
+echo "in compile file 17"
+
 # finalize cache
 if [ "false" == $KEEP_M2_CACHE ]; then
   touch $CACHE_DIR/removeM2Cache
 fi
+
+echo "in compile file 18"
 
 #copy .m2 and .maven if needed
 if [ "true" == $KEEP_M2_CACHE ]; then
@@ -124,4 +148,7 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
+echo "in compile file 19"
+
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
+echo "in compile file 20"
