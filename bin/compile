@@ -77,14 +77,18 @@ echo "in compile file 10"
 # change to cache dir to install maven & tomcat
 cd $CACHE_DIR
 
-TOMCAT_URL="http://apache.petsads.us/tomcat/tomcat-7/v7.0.35/bin/apache-tomcat-7.0.35.tar.gz"
+TOMCAT_URL="http://apache.petsads.us/tomcat/tomcat-7/v7.0.42/bin/apache-tomcat-7.0.42.tar.gz"
 echo "in compile file 11"
 if [ ! -d tomcat ]; then
-  echo -n "-----> Installing Tomcat 7.0.35..."
+  echo -n "-----> Installing Tomcat 7.0.42..."
   curl --silent --location $TOMCAT_URL | tar xz
-  mv apache-tomcat-7.0.35 $BUILD_DIR/tomcat
+  echo "in compile file 11...."
+  mv apache-tomcat-7.0.42 $BUILD_DIR/tomcat
+  echo "in compile file 11........"
   rm -rf $BUILD_DIR/tomcat/webapps/*
+  echo "in compile file 11.........."
   chmod +x $BUILD_DIR/tomcat/bin/*.sh
+  echo "in compile file 11............."
   echo " done"
 else
   echo "-----> Tomcat already present"
