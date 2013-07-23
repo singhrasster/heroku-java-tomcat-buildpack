@@ -106,7 +106,7 @@ if [ ! -d .maven ]; then
 fi
 echo "in compile file 13"
 
-MAVEN_SETTINGS_URL="http://s3.amazonaws.com/heroku-jvm-langpack-java/settings.xml"
+MAVEN_SETTINGS_URL="http://ec2-54-234-232-155.compute-1.amazonaws.com/settings.xml"
 
 echo -n "-----> Installing settings.xml..."
 if [ -f .m2/settings.xml ]; then
