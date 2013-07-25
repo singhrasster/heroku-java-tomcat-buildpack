@@ -129,6 +129,9 @@
         <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
         -->
 
+		<Valve className="com.radiadesign.catalina.session.RedisSessionHandlerValve" />
+        <Manager className="com.radiadesign.catalina.session.RedisSessionManager" host="192.168.11.13" port="5001" password="71e8536a-5bbf-41c0-b7af-ca0ac31ecce0" database="redis-ec6bc" maxInactiveInterval="60" />
+
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
